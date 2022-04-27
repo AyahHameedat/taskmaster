@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Lab16</string>
+    <string name="app_name"> Task Master </string>
+    <string name="ALL_TASKS"> ALL TASKS </string>
+    <string name="ADD_TASK"> ADD TASK </string>
+    <string name="MY_TASKS"> My Tasks </string>
+    <string name="ADD_NEW_TASK">Add a new task</string>
+    <string name="ADD_TITLE"> Title </string>
+    <string name="ADD_BODY"> Description </string>
+    <string name="ADD_SUBMIT"> SUBMIT </string>
+    <string name="Back_Home"> Back </string>
+    <string name="text_ALLTASKS"> All Tasks </string>
+
 </resources>
