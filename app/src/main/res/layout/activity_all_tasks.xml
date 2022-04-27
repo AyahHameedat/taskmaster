@@ -5,15 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".AllTasks">
 
 
     <TextView
-        android:id="@+id/MY_TASKs"
+        android:id="@+id/text_ALLTASKS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:text="@string/MY_TASKS"
+        android:text="@string/text_ALLTASKS"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.129"
@@ -22,10 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.086" />
 
-
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageAllTasks"
         android:layout_width="408dp"
         android:layout_height="279dp"
         android:src="@drawable/cat"
@@ -34,35 +32,18 @@
         app:layout_constraintVertical_bias="0.309"
         tools:layout_editor_absoluteX="1dp" />
 
-
-
     <Button
-        android:id="@+id/ADD_TASK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/Back_Home"
+        android:layout_width="73dp"
+        android:layout_height="46dp"
         android:layout_marginTop="377dp"
-        android:text="@string/ADD_TASK"
+        android:text="@string/Back_Home"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
-
-    <Button
-        android:id="@+id/ALL_TASKS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="377dp"
-        android:text="@string/ALL_TASKS"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.798"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.486" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
