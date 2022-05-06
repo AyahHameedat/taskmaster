@@ -9,5 +9,21 @@
     <string name="ADD_SUBMIT"> SUBMIT </string>
     <string name="Back_Home"> Back </string>
     <string name="text_ALLTASKS"> All Tasks </string>
+    <string name="settings">settings</string>
+    <string name="btn_save">save</string>
+    <string name="hint_enter_username">username</string>
+    <string name="prompt_please_set_username">Please Set Username in Settings</string>
+    <string name="nameTasks"> Tasks</string>
+
+
+    <string name="Title_taskDetails">Title</string>
+    <string name="Description_TaskDetails">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset </string>
+
+
+    <string name="TASK1"> Task1 </string>
+    <string name="TASK2"> Task2 </string>
+    <string name="TASK3"> Task3 </string>
+
+
 
 </resources>

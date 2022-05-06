@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab16">
         <activity
+            android:name=".Task_Details"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".AllTasks"
             android:exported="false" />
         <activity

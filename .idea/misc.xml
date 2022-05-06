@@ -10,7 +10,10 @@
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_add_submit_button.xml" value="0.1015625" />
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_add_task.xml" value="0.25" />
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_all_tasks.xml" value="0.21" />
-        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_settings.xml" value="0.22" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_task_details.xml" value="0.16" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/menu/activity_settings.xml" value="0.25" />
       </map>
     </option>
   </component>
