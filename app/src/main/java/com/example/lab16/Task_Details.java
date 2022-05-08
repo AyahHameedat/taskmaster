@@ -13,7 +13,7 @@ public class Task_Details extends AppCompatActivity {
         setContentView(R.layout.activity_task_details);
 
 
-        String getTaskTitle = getIntent().getStringExtra("Title_TaskDetails");
+        String getTaskTitle = getIntent().getStringExtra("Title");
         TextView title = findViewById(R.id.Title_taskDetails);
         title.setText(getTaskTitle);
 
