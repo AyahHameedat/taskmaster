@@ -6,15 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -79,48 +76,20 @@ public class MainActivity extends AppCompatActivity {
             mTask1.setAllCaps(true);
 
             Intent startTaskDetailsIntent = new Intent(getApplicationContext(), Task_Details.class);
-            startTaskDetailsIntent.putExtra("Title_taskDetails","Task1");
+            startTaskDetailsIntent.putExtra("Title","Task1");
 
             startActivity(startTaskDetailsIntent);
 
         }
     };
 
-    private View.OnClickListener mClickTask2 = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            mTask2.setText("Task2");
-            mTask2.setAllCaps(true);
-
-            Intent startTaskDetailsIntent = new Intent(getApplicationContext(), Task_Details.class);
-            startTaskDetailsIntent.putExtra("Title_taskDetails","Task2");
-            startActivity(startTaskDetailsIntent);
-
-        }
-    };
-
-    private View.OnClickListener mClickTask3 = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            mTask3.setText("Task3");
-            mTask3.setAllCaps(true);
-
-            Intent startTaskDetailsIntent = new Intent(getApplicationContext(), Task_Details.class);
-            startTaskDetailsIntent.putExtra("Title_taskDetails","Task3");
-            startActivity(startTaskDetailsIntent);
-
-        }
-    };
 
         private TextView mMyTasks;
         private TextView mSettings;
         private TextView mAllTasks;
         private TextView mUserName;
         private TextView mTask1;
-        private TextView mTask2;
-        private TextView mTask3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,14 +102,16 @@ public class MainActivity extends AppCompatActivity {
         mUserName = findViewById(R.id.txt_username);
 
 
+
+
         ////////////////*********             ADD Task Button               **********//////////////////
 
 
 
-//        Button AddTaskButton = findViewById(R.id.ADD_TASK);
-//        mMyTasks = findViewById(R.id.MY_TASKs);
-//
-//        AddTaskButton.setOnClickListener(mAddClickListener);
+        Button AddTaskButton = findViewById(R.id.ADD_TASK);
+        mMyTasks = findViewById(R.id.MY_TASKs);
+
+        AddTaskButton.setOnClickListener(mAddClickListener);
 
 
 
@@ -165,13 +136,22 @@ public class MainActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(mClickSettings);
 
 
+
+
         ////////////////*********             Task1 Button                **********//////////////////
 
 
-        Button btnTask1 = findViewById(R.id.btn_task1);
-        mTask1 = findViewById(R.id.btn_task1);
 
-        btnTask1.setOnClickListener(mClickTask1);
+        Button btnTask1 = findViewById(R.id.btn_task1);
+
+        btnTask1.setOnClickListener(view -> {
+            Intent intent = new Intent(this,Task_Details.class);
+            intent.putExtra("Title",btnTask1.getText().toString());
+            startActivity(intent);
+        });
+
+
+        //        btnTask1.setOnClickListener(mClickTask1);
 
 
 
@@ -181,15 +161,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button btnTask2 = findViewById(R.id.btn_task2);
-        mTask2 = findViewById(R.id.btn_task2);
 
         btnTask2.setOnClickListener(view -> {
             Intent intent = new Intent(this,Task_Details.class);
-            intent.putExtra("Title_taskDetails",btnTask2.getText());
+            intent.putExtra("Title",btnTask2.getText().toString());
             startActivity(intent);
         });
 
-//        btnTask2.setOnClickListener(mClickTask2);
 
 
 
@@ -198,12 +176,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button btnTask3 = findViewById(R.id.btn_task3);
-        mTask3 = findViewById(R.id.btn_task3);
 
-        btnTask3.setOnClickListener(mClickTask3);
-
+        btnTask3.setOnClickListener(view -> {
+            Intent intent = new Intent(this,Task_Details.class);
+            intent.putExtra("Title",btnTask3.getText().toString());
+            startActivity(intent);
+        });
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -254,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void navigateToSettings() {
         Intent settingsIntent = new Intent(this, Settings.class);
         startActivity(settingsIntent);
@@ -262,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
     private void setUsername() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         mUserName.setText(sharedPreferences.getString(Settings.USERNAME, "No Username Set"));
+
     }
 
 }
