@@ -2,6 +2,8 @@ package com.example.lab16;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,12 +14,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.lab16.data.TaskData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    List<TaskData> taskDataList = new ArrayList<>();
+
 
 
     private View.OnClickListener mAddClickListener = new View.OnClickListener() {
@@ -138,53 +149,40 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ////////////////*********             Task1 Button                **********//////////////////
+
+        ///////////****************** Recycler View      *****      Lab28     ******////////////////////
+
+        initialiseTaskData();
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
 
 
-        Button btnTask1 = findViewById(R.id.btn_task1);
+        TaskRecyclerViewAdapter taskRecyclerViewAdapter = new TaskRecyclerViewAdapter(
+                taskDataList, position -> {
+            Toast.makeText(
+                    MainActivity.this,
+                    "The Task clicked => " + taskDataList.get(position).getTitle(),Toast.LENGTH_SHORT).show();
 
-        btnTask1.setOnClickListener(view -> {
-            Intent intent = new Intent(this,Task_Details.class);
-            intent.putExtra("Title",btnTask1.getText().toString());
+
+            Intent intent=new Intent(getApplicationContext(),Task_Details.class);
+            intent.putExtra("Title",taskDataList.get(position).getTitle());
+            intent.putExtra("Description",taskDataList.get(position).getBody());
+            intent.putExtra("state",taskDataList.get(position).getState());
             startActivity(intent);
+
+
         });
 
-
-        //        btnTask1.setOnClickListener(mClickTask1);
-
+        recyclerView.setAdapter(taskRecyclerViewAdapter);
 
 
+        // set other important properties
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        ////////////////*********             Task2 Button                **********//////////////////
-
-
-        Button btnTask2 = findViewById(R.id.btn_task2);
-
-        btnTask2.setOnClickListener(view -> {
-            Intent intent = new Intent(this,Task_Details.class);
-            intent.putExtra("Title",btnTask2.getText().toString());
-            startActivity(intent);
-        });
-
-
-
-
-
-        ////////////////*********             Task3 Button                **********//////////////////
-
-
-        Button btnTask3 = findViewById(R.id.btn_task3);
-
-        btnTask3.setOnClickListener(view -> {
-            Intent intent = new Intent(this,Task_Details.class);
-            intent.putExtra("Title",btnTask3.getText().toString());
-            startActivity(intent);
-        });
 
     }
-
 
 
     @Override
@@ -204,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.i(TAG, "onResume: called - The App is VISIBLE");
         setUsername();
+
 
     }
 
@@ -248,5 +247,16 @@ public class MainActivity extends AppCompatActivity {
         mUserName.setText(sharedPreferences.getString(Settings.USERNAME, "No Username Set"));
 
     }
+
+
+
+    private void initialiseTaskData()
+    {
+        taskDataList.add(new TaskData("Lab28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.New));
+        taskDataList.add(new TaskData("Code_Challenge28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.ASSIGNED));
+        taskDataList.add(new TaskData("Read29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.In_Progress));
+        taskDataList.add(new TaskData("Learning_Journal29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.Complete));
+    }
+
 
 }
