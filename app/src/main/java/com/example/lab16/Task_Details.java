@@ -14,8 +14,13 @@ public class Task_Details extends AppCompatActivity {
 
 
         String getTaskTitle = getIntent().getStringExtra("Title");
+        String getTaskState = getIntent().getStringExtra("Task_State");
+
         TextView title = findViewById(R.id.Title_taskDetails);
+        TextView state = findViewById(R.id.state);
+
         title.setText(getTaskTitle);
+        state.setText(getTaskState);
 
     }
 }
