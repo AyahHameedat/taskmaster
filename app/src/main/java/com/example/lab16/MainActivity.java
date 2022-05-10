@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity{
             Intent intent=new Intent(getApplicationContext(),Task_Details.class);
             intent.putExtra("Title",taskDataList.get(position).getTitle());
             intent.putExtra("Description",taskDataList.get(position).getBody());
-            intent.putExtra("state",taskDataList.get(position).getState());
+            intent.putExtra("State",taskDataList.get(position).getState().toString());
             startActivity(intent);
 
 
