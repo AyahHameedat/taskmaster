@@ -18,7 +18,14 @@
 
 # **Lab 27:**
 ### Task Detail Page: It should have a title at the top of the page, and a Lorem Ipsum description.
+![](./screenshots/TaskDetails.png)
+<br>
+
 ### Settings Page: It should allow users to enter their username and hit save.
+![](./screenshots/Settings.png)
+
+<br>
+
 ### Homepage: It should be modified to contain three different buttons with hardcoded task titles....
 
 ![image description](./screenshots/Lab27.png)
@@ -34,4 +41,15 @@
 ![image description](./screenshots/Lab28.png)
 
 
+
+<br>
+
+# **Lab29:**
+### Add Task Form: Modify your Add Task form to save the data entered in as a Task in your local database.
+![](./screenshots/AddTask.png)
+
+<br>
+
+### Homepage: Refactor your homepage’s RecyclerView to display all Task entities in your database.
+![](./screenshots/Lab29.png)
 
