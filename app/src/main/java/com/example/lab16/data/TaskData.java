@@ -1,5 +1,10 @@
 package com.example.lab16.data;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+
+@Entity
 public class TaskData {
 
 
@@ -10,15 +15,27 @@ public class TaskData {
         Complete
     }
 
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
+    @ColumnInfo(name = "title")
     private final String title;
+
+    @ColumnInfo(name = "body")
     private final String body;
-    private final State state;
+
+    @ColumnInfo(name = "state")
+    private final String state;
 
 
-    public TaskData(String title, String body, State state) {
+    public TaskData(String title, String body, String state) {
         this.title = title;
         this.body = body;
         this.state = state;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -29,7 +46,7 @@ public class TaskData {
         return body;
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 }

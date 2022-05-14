@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String TAG = MainActivity.class.getSimpleName();
 
     List<TaskData> taskDataList = new ArrayList<>();
-
+//    Long newTaskId = AppDatabase.getInstance(getApplicationContext()).taskDao().insertTask(task);
 
 
     private View.OnClickListener mAddClickListener = new View.OnClickListener() {
@@ -152,25 +152,27 @@ public class MainActivity extends AppCompatActivity{
 
         ///////////****************** Recycler View      *****      Lab28     ******////////////////////
 
-        initialiseTaskData();
+//        initialiseTaskData();
+
+        List<TaskData> taskList = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
 
 
         TaskRecyclerViewAdapter taskRecyclerViewAdapter = new TaskRecyclerViewAdapter(
-                taskDataList, position -> {
+                taskList, position -> {
             Toast.makeText(
                     MainActivity.this,
-                    "The Task clicked => " + taskDataList.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                    "The Task clicked => " + taskList.get(position).getTitle(),Toast.LENGTH_SHORT).show();
 
 
             Intent intent=new Intent(getApplicationContext(),Task_Details.class);
-            intent.putExtra("Title",taskDataList.get(position).getTitle());
-            intent.putExtra("Description",taskDataList.get(position).getBody());
-            intent.putExtra("State",taskDataList.get(position).getState().toString());
+            intent.putExtra("id", taskList.get(position).getId());
+            intent.putExtra("Title",taskList.get(position).getTitle());
+            intent.putExtra("Description",taskList.get(position).getBody());
+            intent.putExtra("State",taskList.get(position).getState().toString());
             startActivity(intent);
-
 
         });
 
@@ -249,14 +251,20 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
-    private void initialiseTaskData()
+    private void deleteTask(List<TaskData> taskList)
     {
-        taskDataList.add(new TaskData("Lab28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.New));
-        taskDataList.add(new TaskData("Code_Challenge28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.ASSIGNED));
-        taskDataList.add(new TaskData("Read29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.In_Progress));
-        taskDataList.add(new TaskData("Learning_Journal29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.Complete));
+        for (int i = 0; i < taskList.size(); i++) {
+            AppDatabase.getInstance(getApplicationContext()).taskDao().delete(taskList.get(i));
+        }
     }
+
+//    private void initialiseTaskData()
+//    {
+//        taskDataList.add(new TaskData("Lab28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "NEW"));
+//        taskDataList.add(new TaskData("Code_Challenge28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "Complete"));
+//        taskDataList.add(new TaskData("Read29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.In_Progress));
+//        taskDataList.add(new TaskData("Learning_Journal29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", TaskData.State.Complete));
+//    }
 
 
 }
