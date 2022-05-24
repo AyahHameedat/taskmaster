@@ -20,7 +20,10 @@
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_settings.xml" value="0.22" />
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_task_details.xml" value="0.16" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/activity_task_recycler_view_adapter.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/layout/task_item_layout.xml" value="0.1" />
         <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/menu/activity_settings.xml" value="0.25" />
+        <entry key="..\:/Users/user/ASAC/taskmaster/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>
