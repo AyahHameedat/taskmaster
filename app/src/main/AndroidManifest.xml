@@ -9,6 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab16">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/task_item_layout" />
+
+        <activity
+            android:name=".TaskRecyclerViewActivity"
+            android:exported="false" />
         <activity
             android:name=".Task_Details"
             android:exported="false" />
