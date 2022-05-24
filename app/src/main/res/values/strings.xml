@@ -23,6 +23,14 @@
     <string name="TASK1"> Task1 </string>
     <string name="TASK2"> Task2 </string>
     <string name="TASK3"> Task3 </string>
+    <string name="State"> State </string>
+    <string name="Status">Status</string>
 
+    <string-array name="state">
+        <item>NEW</item>
+        <item>In_Progress</item>
+        <item>Complete</item>
+        <item>Assigned</item>
+    </string-array>
 
 </resources>
