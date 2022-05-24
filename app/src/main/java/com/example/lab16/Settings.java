@@ -3,6 +3,7 @@ package com.example.lab16;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,7 +47,11 @@ public class Settings extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
         }
 
-    });
+
+            Intent BackToMain = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(BackToMain);
+
+        });
 
 
     mUsernameTxt.addTextChangedListener(new TextWatcher() {
