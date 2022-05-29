@@ -65,7 +65,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
             this.taskListener = taskListener;
 
-            title = itemView.findViewById(R.id.recycler_view);
+            title = itemView.findViewById(R.id.recycler_view_Button);
 //            body = itemView.findViewById(R.id.task_body);
 //            state = itemView.findViewById(R.id.task_state);
 

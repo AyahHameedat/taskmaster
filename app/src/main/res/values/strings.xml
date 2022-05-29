@@ -5,7 +5,7 @@
     <string name="MY_TASKS"> My Tasks </string>
     <string name="ADD_NEW_TASK">Add a new task</string>
     <string name="ADD_TITLE"> Title </string>
-    <string name="ADD_BODY"> Description </string>
+    <string name="ADD_BODY"> Body </string>
     <string name="ADD_SUBMIT"> SUBMIT </string>
     <string name="Back_Home"> Back </string>
     <string name="text_ALLTASKS"> All Tasks </string>
