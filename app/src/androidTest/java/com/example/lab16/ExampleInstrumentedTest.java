@@ -3,15 +3,20 @@ package com.example.lab16;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.test.espresso.ViewAction;
 //import android.support.test.espresso.contrib.RecyclerViewActions;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 //import android.support.test.espresso.contrib.RecyclerViewActions;
+
+
+
 import androidx.test.espresso.contrib.RecyclerViewActions;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -29,6 +34,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -50,10 +56,14 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest<ActivityTestRule> {
 
+//    RecyclerView recyclerView;
 
     @Rule
     public ActivityScenarioRule rule =
             new ActivityScenarioRule<>(MainActivity.class);
+
+//    @Rule
+//    public ActivityTestRule rule = new ActivityTestRule<MainActivity>(MainActivity.class, false, false);
 
 
     @Test
@@ -90,23 +100,44 @@ public class ExampleInstrumentedTest<ActivityTestRule> {
     public void navigateToTasksScreenTest()
     {
 
+//        RecyclerView recyclerView = rule.getActivity().findViewById(R.id.recycler_view)
 
-        onView(withId(R.id.recycler_view))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.Title_taskDetails)).check(matches(withText("TitleAYA2")));
+        rule.getScenario().onActivity(activity -> {
+            RecyclerView recyclerView = activity.findViewById(R.id.recycler_view);
+            int itemCount = recyclerView.getAdapter().getItemCount();
+//            onView(withId(R.id.recycler_view))
+//                    .perform(RecyclerViewActions.actionOnItemAtPosition(itemCount, click()));
+            Log.i("itemCount" , String.valueOf(itemCount));
+            onView(withId(R.id.Title_taskDetails)).check(matches(withText("aya")));
 
+        });
+
+
+
+//        recyclerView.getAdapter().getItemCount();
     }
 
     @Test
     public void AddTaskScreenTest() {
 
         onView(withId(R.id.ADD_TASK)).perform(click());
-
-        onView(withId(R.id.ADD_TITLE)).perform(typeText("AYA2"),
+        closeSoftKeyboard();
+        onView(withId(R.id.ADD_TITLE)).perform(typeText("aya"),
                 closeSoftKeyboard());
-        onView(withId(R.id.ADD_BODY)).perform(typeText("AYA2............."),
+        onView(withId(R.id.ADD_BODY)).perform(typeText("task"),
                 closeSoftKeyboard());
         onView(withId(R.id.ADD_SUBMIT)).perform(click());
+
+//
+//        rule.getScenario().onActivity(activity -> {
+//            RecyclerView recyclerView = activity.findViewById(R.id.recycler_view);
+//            int itemCount = recyclerView.getAdapter().getItemCount();
+//            onView(withId(R.id.recycler_view))
+//                    .perform(RecyclerViewActions.scrollToPosition(itemCount - 1));
+//            Log.i("itemCount" , String.valueOf(itemCount));
+//            onView(withId(R.id.Title_taskDetails)).check(matches(withText("aya")));
+//
+//        });
 
 //        List<TaskData> taskList = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
 
