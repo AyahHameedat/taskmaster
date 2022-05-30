@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,7 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
 
+
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
 import com.example.lab16.data.TaskData;
 
 import java.util.ArrayList;
@@ -26,6 +34,11 @@ public class MainActivity extends AppCompatActivity{
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TASK_ID = "taskId";
+    public static final String DATA = "data";
+
+
+    private Handler handler;
 
     List<TaskData> taskDataList = new ArrayList<>();
 //    Long newTaskId = AppDatabase.getInstance(getApplicationContext()).taskDao().insertTask(task);
@@ -109,6 +122,13 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate: Called");
 
+//        try {
+//            Amplify.configure(getApplicationContext());
+//            Log.i("MyAmplifyApp", "Initialized Amplify");
+//        } catch (AmplifyException error) {
+//            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+//        }
+
 
         mUserName = findViewById(R.id.txt_username);
 
@@ -154,7 +174,24 @@ public class MainActivity extends AppCompatActivity{
 
 //        initialiseTaskData();
 
+
         List<TaskData> taskList = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
+
+
+        ////////////////////******************************* Lab32 ******************************////////////////////////////////
+
+        handler = new Handler(Looper.getMainLooper(), msg -> {
+            String data = msg.getData().getString(DATA);
+            String taskId = msg.getData().getString(TASK_ID);
+//            Toast.makeText(this, "The Toast Works => " + data, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(TASK_ID, taskId);
+
+            startActivity(intent);
+            return true;
+        });
+
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 

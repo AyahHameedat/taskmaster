@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,17 +17,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Task;
 import com.example.lab16.data.TaskData;
 
 public class AddTask extends AppCompatActivity {
 
     private String[] mStates = new String[]{"New", "In-Progress", "Complete", "Assigned"};
 
+    public static final String TAG = AddTask.class.getSimpleName();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-
 
 
         Spinner stateSelector = findViewById(R.id.spinner_State_selector);
@@ -53,10 +64,6 @@ public class AddTask extends AppCompatActivity {
 
         Button button = findViewById(R.id.ADD_SUBMIT);
 
-//        button.setOnClickListener(view -> {
-//            Toast.makeText(this, "Submitted!", Toast.LENGTH_SHORT).show();
-//
-//        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,17 +81,50 @@ public class AddTask extends AppCompatActivity {
                 String body = AddBody.getText().toString();
                 String state = stateSelector.getSelectedItem().toString();
 
-//                addTitle.setText(title);
-//                AddBody.setText(body);
-//                addState.setText(state);
-
 
                 TaskData task = new TaskData(title, body, state);
                 Long newTaskId = AppDatabase.getInstance(getApplicationContext()).taskDao().insertTask(task);
 
                 System.out.println("******************** Task ID = " + newTaskId + " ************************");
 
-//                Toast.makeText(this, "Submitted!" + task.getTitle(), Toast.LENGTH_SHORT).show();
+
+                configureAmplify();
+
+
+                Task item = Task.builder()
+                        .title(title)
+                        .description(body)
+                        .status(state)
+                        .build();
+
+
+
+                Amplify.API.mutate(
+                        ModelMutation.create(item),
+                        success -> Log.i(TAG, "Saved item: " + success.getData().getTitle()),
+                        error -> Log.e(TAG, "Could not save item to API", error)
+                );
+
+
+
+                // Datastore and API sync
+
+                Amplify.DataStore.observe(Task.class,
+                        started -> {
+                            Log.i(TAG, "Observation began.");
+                            // TODO: 5/17/22 Update the UI thread with in this call method
+                            // Manipulate your views
+
+                            // call handler
+                        },
+                        change -> Log.i(TAG, change.item().toString()),
+                        failure -> Log.e(TAG, "Observation failed.", failure),
+                        () -> Log.i(TAG, "Observation complete.")
+                );
+
+                Toast.makeText(getApplicationContext(), "Submitted!" +  getTitle(), Toast.LENGTH_SHORT).show();
+
+
 
                 Intent BackToMain = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(BackToMain);
@@ -96,7 +136,17 @@ public class AddTask extends AppCompatActivity {
 
     }
 
+    private void configureAmplify () {
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            Amplify.configure(getApplicationContext());
 
-
+            Log.i(TAG, "Initialized Amplify");
+        } catch (AmplifyException e) {
+            Log.e(TAG, "Could not initialize Amplify", e);
+        }
+    }
 
 }
+

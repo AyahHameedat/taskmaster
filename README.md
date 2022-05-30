@@ -57,3 +57,21 @@
 
 # **Lab31:**
 ### Espresso
+![](./screenshots/Lab31.png)
+
+
+
+
+# **Lab32:**
+### Integrating AWS for Cloud Data Storage
+#### Modify your Add Task form to save the data entered in as a Task to DynamoDB.
++ AddTask Page
+![](./screenshots/Lab32-AddTask.png)
+
++ HomePage
+![](./screenshots/Lab32-HomePage.png)
+  
++ AWS table 
+![](./screenshots/table.png)
+
+
