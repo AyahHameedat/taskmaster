@@ -9,17 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Task;
 import com.example.lab16.data.TaskData;
 
 import java.util.List;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.TaskViewHolder> {
 
-    List<TaskData> taskDataList;
+    List<Task> taskDataList;
     TaskClickListener taskListener;
 
 
-    public TaskRecyclerViewAdapter(List<TaskData> taskDataList,
+    public TaskRecyclerViewAdapter(List<Task> taskDataList,
                                    TaskClickListener taskListener) {
         this.taskDataList = taskDataList;
         this.taskListener = taskListener;

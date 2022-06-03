@@ -12,15 +12,27 @@ import android.util.Log;
 import android.view.View;
 import android.text.Editable;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Settings extends AppCompatActivity {
 
     private static final String TAG = Settings.class.getSimpleName();
     public static final String USERNAME = "username";
+    public static final String TEAMNAME = "teamName";
+
     private EditText mUsernameTxt;
+    private Spinner stateSelectorTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +43,49 @@ public class Settings extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btn_save);
 
 
+        stateSelectorTeam = findViewById(R.id.spinner_Team_selector);
+        List<Team> teamsList = new ArrayList<>();
+
+        Amplify.API.query(
+                ModelQuery.list(Team.class),
+                item -> {
+                    for (Team team : item.getData()) {
+                        teamsList.add(team);
+                    }
+
+
+                    runOnUiThread(() -> {
+                        String[] team_name = new String[teamsList.size()];
+
+                        for (int i = 0; i < teamsList.size(); i++) {
+                            team_name[i] = teamsList.get(i).getName();
+                        }
+                        // create adapter
+
+                        ArrayAdapter<CharSequence> spinnerAdapterTeam = new ArrayAdapter<CharSequence>(
+                                this,
+                                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                                team_name
+                        );
+
+                        spinnerAdapterTeam.notifyDataSetChanged();
+                        // set adapter
+                        stateSelectorTeam.setAdapter(spinnerAdapterTeam);
+
+
+                    });
+
+                },
+                error -> Log.e(TAG, "Failure", error)
+        );
+
+
+
         btnSave.setOnClickListener(view -> {
             Log.i(TAG, "Save button Clicked");
 
         if (mUsernameTxt.getText().toString().length() >= 3) {
-            saveUsername();
+            saveUsernameTeam();
         } else {
             Toast.makeText(this, "Add a longer Username", Toast.LENGTH_SHORT).show();
         }
@@ -82,9 +132,10 @@ public class Settings extends AppCompatActivity {
     });
 }
 
-    private void saveUsername() {
+    private void saveUsernameTeam() {
         // get the text from the edit text
         String username = mUsernameTxt.getText().toString();
+        String teamName = stateSelectorTeam.getSelectedItem().toString();
 
         // create shared preference object and set up an editor
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -92,6 +143,9 @@ public class Settings extends AppCompatActivity {
 
         // save the text to shared preferences
         preferenceEditor.putString(USERNAME, username);
+        preferenceEditor.apply();
+
+        preferenceEditor.putString(TEAMNAME, teamName);
         preferenceEditor.apply();
 
         Toast.makeText(this, "Username Saved", Toast.LENGTH_SHORT).show();

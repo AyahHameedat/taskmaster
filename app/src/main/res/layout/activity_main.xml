@@ -23,7 +23,20 @@
         app:layout_constraintVertical_bias="0.037" />
 
 
-        <ImageView
+    <TextView
+        android:id="@+id/txt_teamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_Settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="408dp"
         android:layout_height="279dp"
