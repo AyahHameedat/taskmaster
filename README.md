@@ -66,12 +66,50 @@
 ### Integrating AWS for Cloud Data Storage
 #### Modify your Add Task form to save the data entered in as a Task to DynamoDB.
 + AddTask Page
+
+<br>
+  
 ![](./screenshots/Lab32-AddTask.png)
 
+<br>
+
+
 + HomePage
+ 
+<br>
+
 ![](./screenshots/Lab32-HomePage.png)
+
+<br>
+
++ AWS Table
   
-+ AWS table 
+<br>
+
+
 ![](./screenshots/table.png)
 
+
+# **Lab33:**
+### **HomePage**
+![](./screenshots/HomePage-Lab33.png)
+<br>
+#### Modify your Add Task form to include either a Spinner or Radio Buttons for which team that task belongs to.
+
++ AddTask Page
+Modify your Add Task form to include either a Spinner or Radio Buttons for which team that task belongs to.
+  
+![](./screenshots/AddTask-lab33.png)
+
+<br>
+
++ Settings Page
+
+<br>
+
+In addition to a username, allow the user to choose their team on the Settings page. Use that Team to display only that team’s tasks on the homepage.
+
+<br>
+
+![](./screenshots/Settings-Lab33.png)
 

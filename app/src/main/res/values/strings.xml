@@ -25,6 +25,7 @@
     <string name="TASK3"> Task3 </string>
     <string name="State"> State </string>
     <string name="Status">Status</string>
+    <string name="teamSppinerText">Team</string>
 
     <string-array name="state">
         <item>NEW</item>
