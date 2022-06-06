@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate: Called");
 
 
         configureAmplify();
@@ -194,19 +192,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart: called");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(TAG, "onRestart: called");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: called - The App is VISIBLE");
         setUserAndTeamName();
         getTaskByTeam();
         getTasks();
@@ -216,19 +211,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Log.i(TAG, "onPause: called");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.i(TAG, "onStop: called");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.i(TAG, "onDestroy: called");
         super.onDestroy();
     }
 
@@ -269,20 +261,20 @@ public class MainActivity extends AppCompatActivity {
 
         Amplify.API.mutate(
                 ModelMutation.create(teamOne),
-                item -> Log.i("TaskMaster", "Added : " + item.getData().getId()),
-                error -> Log.e("TaskMaster", "Create failed", error)
+                item -> {},
+                error -> { }
         );
 
 
         Amplify.API.mutate(
                 ModelMutation.create(teamTwo),
-                item -> Log.i("TaskMaster", "Added : " + item.getData().getId()),
-                error -> Log.e("TaskMaster", "Create failed", error)
+                item -> { },
+                error -> { }
         );
         Amplify.API.mutate(
                 ModelMutation.create(teamThree),
-                item -> Log.i("TaskMaster", "Added : " + item.getData().getId()),
-                error -> Log.e("TaskMaster", "Create failed", error)
+                item -> { },
+                error -> { }
         );
 
     }
@@ -323,7 +315,6 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String teamName = sharedPreferences.getString(Settings.TEAMNAME, "Team");
-        Log.i(TAG, "teamname: " + teamName);
         String[] teamId = new String[1];
         Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
                 detect -> {
@@ -334,20 +325,13 @@ public class MainActivity extends AppCompatActivity {
                     Amplify.API.query(ModelQuery.list(Task.class),
                             item -> {
 //                                        List <Task> helper = item.getData();
-//                                        Log.i(TAG, "item: " + item.getData());
                                 if (item.hasData()) {
-//                                            Log.i(TAG, "item: " + item.getData());
                                     for (Task task : item.getData()) {
-                                        Log.i(TAG, "item: " + task.getTeamTasksId());
                                         if (task.getTeamTasksId().equals(teamId[0])) {
                                             tasksListAdap.add(task);
-                                            Log.i(TAG, "Eqnul " + task);
-
                                         }
                                     }
-                                    Log.i(TAG, "tasskLisAdap " + tasksListAdap);
                                 }
-                                Log.i(TAG, "tasskLis " + tasksListAdap);
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("TeamTaskID", detect.toString());
@@ -356,12 +340,12 @@ public class MainActivity extends AppCompatActivity {
                                 message.setData(bundle);
 
                                 handler.sendMessage(message);
-                                Log.i(TAG, "yooshi: " + tasksListAdap);
                             },
-                            error -> Log.e(TAG, error.toString(), error)
+                            error -> {
+                            }
                     );
                 },
-                error -> Log.e(TAG, error.toString(), error)
+                error -> {}
         );
 
     }
@@ -381,9 +365,7 @@ public class MainActivity extends AppCompatActivity {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.configure(getApplicationContext());
-            Log.i(TAG, "Initialized Amplify");
         } catch (AmplifyException e) {
-            Log.e(TAG, "Could not initialize Amplify", e);
         }
     }
 

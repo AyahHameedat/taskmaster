@@ -21,10 +21,6 @@ public class Task_Details extends AppCompatActivity {
         setContentView(R.layout.activity_task_details);
 
 
-//
-//        SQLiteDatabase db = this.openOrCreateDatabase("TaskData", Context.MODE_PRIVATE, null);
-//        Long id = null;
-//        Cursor taskData = db.rawQuery(AppDatabase.getInstance(getApplicationContext()).taskDao().getTaskByID(id), null);
 
 
         String getTaskTitle = getIntent().getStringExtra("Title");

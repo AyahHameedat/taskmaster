@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -117,8 +116,8 @@ public class AddTask extends AppCompatActivity {
 
                     handler.sendMessage(message);
                 },
-                error -> Log.e(TAG, "Query failure", error)
-        );
+                error -> {
+                });
 
 
 
@@ -161,13 +160,12 @@ public class AddTask extends AppCompatActivity {
 
                                     Amplify.API.mutate(
                                             ModelMutation.create(task),
-                                            success -> Log.i(TAG, "Saved item: " + success.getData().getTitle()),
-                                            error -> Log.e(TAG, "Could not save item to API", error)
-                                    );
+                                            success -> {},
+                                            error -> { });
                                 }
                             }
                         },
-                        error -> Log.e(TAG, "Query failure", error)
+                        error -> {}
                 );
 
 
@@ -186,49 +184,3 @@ public class AddTask extends AppCompatActivity {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        ٍSpinner teamSpinner = findViewById(R.id.spinner_Team_selector);
-//        String teamSelected = teamSpinner.getText().toString();
-//        teamsList.add("1", "Team", );
-//        Spinner stateSelectorTeam = findViewById(R.id.spinner_Team_selector);
-
-//
-//
-//        RadioGroup radioTeam = findViewById(R.id.teamRG);
-//        int Button_id = radioTeam.getCheckedRadioButtonId();
-//        RadioButton buttonSelected = findViewById(Button_id);
-//        String teamSelected = buttonSelected.getText().toString();
-//
-//
-//        Amplify.API.query(
-//                ModelQuery.get(Team.class, teamsList.get(teamSelected.)),
-//                response -> {
-//                    Log.i("response1", response.getData().toString());
-//
-//                    Task task = Task.builder()
-//                            .title(title.getText().toString())
-//                            .body(body.getText().toString())
-//                            .state(state.getText().toString())
-//                            .teamId(response.getData().getId())
-//                            .build();
-//
-//                    Amplify.API.mutate(
-//                            ModelMutation.create(task),
-//                            response3 -> Log.i("TaskMaster", "Added Task with id: " + response3.getData().getId()),
-//                            error -> Log.e("TaskMaster", "Create failed", error));
-//                }, error -> Log.e("TaskMaster", error.toString(), error)
-//        );
-//
-//
