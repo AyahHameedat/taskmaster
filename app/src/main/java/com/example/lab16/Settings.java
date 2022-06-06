@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.text.Editable;
 import android.view.inputmethod.InputMethodManager;
@@ -76,13 +75,12 @@ public class Settings extends AppCompatActivity {
                     });
 
                 },
-                error -> Log.e(TAG, "Failure", error)
+                error -> {}
         );
 
 
 
         btnSave.setOnClickListener(view -> {
-            Log.i(TAG, "Save button Clicked");
 
         if (mUsernameTxt.getText().toString().length() >= 3) {
             saveUsernameTeam();
@@ -114,12 +112,10 @@ public class Settings extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.i(TAG, "onTextChanged: the text is : " + charSequence);
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            Log.i(TAG, "afterTextChanged: the final text is : " + editable.toString());
             if (!btnSave.isEnabled()) {
                 btnSave.setEnabled(true);
             }
