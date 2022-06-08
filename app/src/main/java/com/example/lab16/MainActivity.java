@@ -1,9 +1,6 @@
 package com.example.lab16;
 
-import static com.amplifyframework.core.Amplify.configure;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,27 +11,21 @@ import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
 
 
-import com.amazonaws.auth.AWSCognitoIdentityProvider;
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
-import com.amplifyframework.util.Environment;
 import com.example.lab16.data.TaskData;
 
 import java.util.ArrayList;
@@ -136,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        configureAmplify();
+        authSession("onCreate");
+
 
         mUserName = findViewById(R.id.txt_username);
         mTeamName = findViewById(R.id.txt_teamName);
@@ -184,10 +176,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        ////////////////*********           UserName Lab36               **********//////////////////
+
+        handler = new Handler(getMainLooper(), msg -> {
+           String username = msg.getData().getString("username");
+           mUserName.setText(username);
+           return true;
+        });
 
 
 }
-
 
     @Override
     protected void onStart() {
@@ -225,14 +223,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        switch (id) {
             case R.id.btn_Settings:
                 navigateToSettings();
                 return true;
+            case R.id.logout:
+                logout();
+                break;
+            case R.id.reset:
+                // TODO: 5/25/22 Implement reset password
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
 
@@ -318,8 +330,7 @@ public class MainActivity extends AppCompatActivity {
         String[] teamId = new String[1];
         Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
                 detect -> {
-                    for (Team team :
-                            detect.getData()) {
+                    for (Team team : detect.getData()) {
                         teamId[0] = team.getId();
                     }
                     Amplify.API.query(ModelQuery.list(Task.class),
@@ -360,15 +371,37 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void configureAmplify () {
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.configure(getApplicationContext());
-        } catch (AmplifyException e) {
-        }
+    private void authSession(String method) {
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    Log.i(TAG, "Auth Session => " + method + result.toString());
+                    if(result.isSignedIn())
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", "username");
+
+                        Message message = new Message();
+                        message.setData(bundle);
+
+                        handler.sendMessage(message);
+                    }
+                },
+
+                error -> Log.e(TAG, error.toString())
+        );
     }
 
 
+    private void logout() {
+        Amplify.Auth.signOut(
+                () -> {
+                    Log.i(TAG, "Signed out successfully");
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    authSession("logout");
+                    finish();
+                },
+                error -> Log.e(TAG, error.toString())
+        );
+    }
 
 }
