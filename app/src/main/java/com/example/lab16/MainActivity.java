@@ -322,44 +322,82 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getTasks()
-    {
+    private void getTasks() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String teamName = sharedPreferences.getString(Settings.TEAMNAME, "Team");
-        String[] teamId = new String[1];
-        Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
-                detect -> {
-                    for (Team team : detect.getData()) {
-                        teamId[0] = team.getId();
-                    }
-                    Amplify.API.query(ModelQuery.list(Task.class),
-                            item -> {
-//                                        List <Task> helper = item.getData();
-                                if (item.hasData()) {
-                                    for (Task task : item.getData()) {
-                                        if (task.getTeamTasksId().equals(teamId[0])) {
-                                            tasksListAdap.add(task);
-                                        }
-                                    }
-                                }
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("TeamTaskID", detect.toString());
+        if (!teamName.equals("")) {
+            RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-                                Message message = new Message();
-                                message.setData(bundle);
+            //get the data from the dynamoDB
+            Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+                @Override
+                public boolean handleMessage(@NonNull Message message) {
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    return false;
+                }
+            });
 
-                                handler.sendMessage(message);
-                            },
-                            error -> {
-                            }
-                    );
-                },
-                error -> {}
-        );
+            List<Task> taskList = new ArrayList<Task>();
+            Amplify.API.query(
+                    ModelQuery.get(Team.class, teamName),
+                    response -> {
+                        Log.i("response", response.toString());
+                        for (Task task : response.getData().getTasks()) {
+                            taskList.add(task);
+                        }
+                        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+                        sharedPreferencesEditor.putInt("Counter", taskList.size());
+                        sharedPreferencesEditor.apply();
+                        handler.sendEmptyMessage(1);
+                    },
+                    error -> Log.e("TaskMaster", error.toString(), error)
+            );
 
+//            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//            recyclerView.setAdapter(new TaskRecyclerViewAdapter(taskList));
+
+
+        }
     }
+
+
+
+
+//        String[] teamId = new String[1];
+//        Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
+//                detect -> {
+//                    for (Team team : detect.getData()) {
+//                        teamId[0] = team.getId();
+//                    }
+//                    Amplify.API.query(ModelQuery.list(Task.class),
+//                            item -> {
+////                                        List <Task> helper = item.getData();
+//                                if (item.hasData()) {
+//                                    for (Task task : item.getData()) {
+//                                        if (task.getTeamTasksId().equals(teamId[0])) {
+//                                            tasksListAdap.add(task);
+//                                        }
+//                                    }
+//                                }
+//
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("TeamTaskID", detect.toString());
+//
+//                                Message message = new Message();
+//                                message.setData(bundle);
+//
+//                                handler.sendMessage(message);
+//                            },
+//                            error -> {
+//                            }
+//                    );
+//                },
+//                error -> {}
+//        );
+//
+//    }
 
 
     private void deleteTask(List<TaskData> taskList)
