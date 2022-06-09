@@ -375,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void authSessionUserName(String method) {
+//        https://github.com/aws-amplify/amplify-android/issues/851
         Amplify.Auth.fetchAuthSession(
                         result -> {
                         Log.i(TAG, result.toString());
