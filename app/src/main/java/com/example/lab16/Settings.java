@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.text.Editable;
 import android.view.inputmethod.InputMethodManager;
@@ -146,6 +147,7 @@ public class Settings extends AppCompatActivity {
 
         Toast.makeText(this, "Username Saved", Toast.LENGTH_SHORT).show();
     }
+
 }
 
 
