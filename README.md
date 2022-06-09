@@ -136,3 +136,18 @@ Updating application resources for release.
 Preparing remote servers and services that your application depends on.
 Releasing your app to users
 You can release your Android applications several ways. Usually, you release applications through an application marketplace such as Google Play, but you can also release applications on your own website or by sending an application directly to a user.
+
+
+
+# **Lab36:**
+
+### User Login
+##### Add Cognito to your Amplify setup. Add in user login and sign up flows to your application, using Cognito’s pre-built UI as appropriate. Display the logged-in user’s username (or nickname) somewhere relevant in your app.
+![](./screenshots/Login.png)
+
+### To Registration:
+![](./screenshots/SignUp.png)
+
+### User Logout
+##### Allow users to log out of your application.
+![](./screenshots/Lab36.png)

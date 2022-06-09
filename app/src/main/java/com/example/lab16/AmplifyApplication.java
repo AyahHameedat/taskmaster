@@ -16,8 +16,8 @@ public class AmplifyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         configureAmplify();
+
     }
 
     private void configureAmplify() {

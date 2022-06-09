@@ -9,7 +9,9 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDays": 45,
+              "apiKeyExpirationDate": "2022-07-24T09:03:19.303Z",
+              "description": "Noriah"
             }
           },
           "additionalAuthenticationProviders": []

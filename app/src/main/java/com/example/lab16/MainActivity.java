@@ -178,10 +178,14 @@ public class MainActivity extends AppCompatActivity {
 
         ////////////////*********           UserName Lab36               **********//////////////////
 
+
+//        Amplify.Auth.currentUser
+
         handler = new Handler(getMainLooper(), msg -> {
            String username = msg.getData().getString("username");
            mUserName.setText(username);
-           return true;
+            authSessionUserName(username);
+            return true;
         });
 
 
@@ -327,77 +331,39 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String teamName = sharedPreferences.getString(Settings.TEAMNAME, "Team");
 
-        if (!teamName.equals("")) {
-            RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        String[] teamId = new String[1];
+        Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
+                detect -> {
+                    for (Team team : detect.getData()) {
+                        teamId[0] = team.getId();
+                    }
+                    Amplify.API.query(ModelQuery.list(Task.class),
+                            item -> {
+//                                        List <Task> helper = item.getData();
+                                if (item.hasData()) {
+                                    for (Task task : item.getData()) {
+                                        if (task.getTeamTasksId().equals(teamId[0])) {
+                                            tasksListAdap.add(task);
+                                        }
+                                    }
+                                }
 
-            //get the data from the dynamoDB
-            Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
-                @Override
-                public boolean handleMessage(@NonNull Message message) {
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                    return false;
-                }
-            });
+                                Bundle bundle = new Bundle();
+                                bundle.putString("TeamTaskID", detect.toString());
 
-            List<Task> taskList = new ArrayList<Task>();
-            Amplify.API.query(
-                    ModelQuery.get(Team.class, teamName),
-                    response -> {
-                        Log.i("response", response.toString());
-                        for (Task task : response.getData().getTasks()) {
-                            taskList.add(task);
-                        }
-                        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-                        sharedPreferencesEditor.putInt("Counter", taskList.size());
-                        sharedPreferencesEditor.apply();
-                        handler.sendEmptyMessage(1);
-                    },
-                    error -> Log.e("TaskMaster", error.toString(), error)
-            );
+                                Message message = new Message();
+                                message.setData(bundle);
 
-//            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//            recyclerView.setAdapter(new TaskRecyclerViewAdapter(taskList));
+                                handler.sendMessage(message);
+                            },
+                            error -> {
+                            }
+                    );
+                },
+                error -> {}
+        );
 
-
-        }
     }
-
-
-
-
-//        String[] teamId = new String[1];
-//        Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.eq(teamName)),
-//                detect -> {
-//                    for (Team team : detect.getData()) {
-//                        teamId[0] = team.getId();
-//                    }
-//                    Amplify.API.query(ModelQuery.list(Task.class),
-//                            item -> {
-////                                        List <Task> helper = item.getData();
-//                                if (item.hasData()) {
-//                                    for (Task task : item.getData()) {
-//                                        if (task.getTeamTasksId().equals(teamId[0])) {
-//                                            tasksListAdap.add(task);
-//                                        }
-//                                    }
-//                                }
-//
-//                                Bundle bundle = new Bundle();
-//                                bundle.putString("TeamTaskID", detect.toString());
-//
-//                                Message message = new Message();
-//                                message.setData(bundle);
-//
-//                                handler.sendMessage(message);
-//                            },
-//                            error -> {
-//                            }
-//                    );
-//                },
-//                error -> {}
-//        );
-//
-//    }
 
 
     private void deleteTask(List<TaskData> taskList)
@@ -407,6 +373,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void authSessionUserName(String method) {
+        Amplify.Auth.fetchAuthSession(
+                        result -> {
+                        Log.i(TAG, result.toString());
+                        Toast.makeText(this, "${Amplify.Auth.currentUser.userId} is logged in", Toast.LENGTH_LONG).show();
+                },
+                error -> Log.e(TAG, error.toString())
+        );
+    }
 
 
     private void authSession(String method) {
