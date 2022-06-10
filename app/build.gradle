@@ -61,4 +61,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.4.0"
 
 
+    implementation 'com.amplifyframework:aws-storage-s3:1.35.4'
+
 }

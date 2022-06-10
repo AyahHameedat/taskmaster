@@ -47,6 +47,7 @@
     <string name="signup_prompt"> Don\'t have an account? SIGN UP </string>
     <string name="label_enter_code">Enter Verification Code</string>
     <string name="prompt_username">Username</string>
+    <string name="Upload">Upload</string>
 
 
 </resources>

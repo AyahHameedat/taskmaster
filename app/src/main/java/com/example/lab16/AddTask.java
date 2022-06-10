@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,9 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.example.lab16.data.TaskData;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,7 @@ public class AddTask extends AppCompatActivity {
 
 
     public static final String TAG = AddTask.class.getSimpleName();
+    private Button uploadButton;
 
 
     @Override
@@ -54,8 +59,14 @@ public class AddTask extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
 
 
-        /// Spinner + Adapter for status
 
+        // Upload Image
+        setUpListeners();
+
+
+
+
+        /// Spinner + Adapter for status
 
         Spinner stateSelector = findViewById(R.id.spinner_State_selector);
 
@@ -179,6 +190,111 @@ public class AddTask extends AppCompatActivity {
         });
 
 
+    }
+
+
+
+
+    private void setUpListeners() {
+
+        /// Upload Button
+        uploadButton = findViewById(R.id.Upload_img);
+        uploadButton.setOnClickListener(view -> fileUpload());
+
+//
+//
+//        buttonPressMe.setOnClickListener(view -> {
+//            String title = titleEditText.getText().toString();
+//            String note = noteEditText.getText().toString();
+//
+//            Task task = Task.builder()
+//                    .title(title)
+//                    .description("It's anybody's guess")
+//                    .build();
+//
+//            // Data store save
+//            Amplify.DataStore.save(task,
+//                    successTask -> {
+//                        Log.i(TAG, "Saved task: " + successTask.item().getTitle());
+//
+//                        // add the note to the task
+//                        Note taskNote = Note.builder()
+//                                .content(note)
+//                                .taskNotesId(successTask.item().getId())
+//                                .build();
+//
+//                        Amplify.DataStore.save(taskNote,
+//                                noteSuccess -> {
+//                                    Log.i(TAG, "Saved note: " + noteSuccess.item().getId());
+//
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putString(TASK_ID, noteSuccess.item().getTaskNotesId());
+//
+//                                    Message message = new Message();
+//                                    message.setData(bundle);
+//
+//                                    handler.sendMessage(message);
+//                                },
+//                                error -> Log.e(TAG, "Could not save note to DataStore", error)
+//                        );
+//
+//                    },
+//                    error -> Log.e(TAG, "Could not save task to DataStore", error)
+//            );
+//
+//            Amplify.API.mutate(ModelMutation.create(task),
+//                    successTask -> {
+//                        Log.i(TAG, "Saved task: " + successTask.getData().getTitle());
+//
+//                        // add the note to the task
+//                        Note taskNote = Note.builder()
+//                                .content(note)
+//                                .taskNotesId(successTask.getData().getId())
+//                                .build();
+//
+//                        Amplify.API.mutate(ModelMutation.create(taskNote),
+//                                noteSuccess -> {
+//                                    Log.i(TAG, "Saved note: " + noteSuccess.getData().getId());
+//
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putString(TASK_ID, noteSuccess.getData().getTaskNotesId());
+//
+//                                    Message message = new Message();
+//                                    message.setData(bundle);
+//
+//                                    handler.sendMessage(message);
+//                                },
+//                                error -> Log.e(TAG, "Could not save note to DataStore", error)
+//                        );
+//                    },
+//                    error -> Log.e(TAG, "Could not save task to DataStore", error)
+//            );
+//        });
+//        buttonUpload.setOnClickListener(view -> pictureUpload());
+//        buttonDownload.setOnClickListener(view -> pictureDownload());
+    }
+
+
+    private void fileUpload()
+    {
+        File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+
+        // creates a file on the device
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
+            writer.append("Example file contents");
+            writer.close();
+        } catch (Exception exception) {
+            Log.e(TAG, "Upload failed", exception);
+        }
+
+        // uploads the file
+        Amplify.Storage.uploadFile(
+                "ExampleKey",
+                exampleFile,
+                result -> Log.i(TAG, "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
+        );
     }
 
 }
