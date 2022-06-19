@@ -23,5 +23,19 @@ export type AmplifyDependentResourcesAttributes = {
             "BucketName": "string",
             "Region": "string"
         }
+    },
+    "analytics": {
+        "aya": {
+            "Region": "string",
+            "Id": "string",
+            "appName": "string"
+        }
+    },
+    "predictions": {
+        "translateText4490d697": {
+            "region": "string",
+            "sourceLang": "string",
+            "targetLang": "string"
+        }
     }
 }

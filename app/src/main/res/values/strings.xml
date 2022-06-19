@@ -17,7 +17,7 @@
 
 
     <string name="Title">Title</string>
-    <string name="Description_TaskDetails">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset </string>
+    <string name="Description_TaskDetails">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. </string>
 
 
     <string name="TASK1"> Task1 </string>
@@ -48,6 +48,8 @@
     <string name="label_enter_code">Enter Verification Code</string>
     <string name="prompt_username">Username</string>
     <string name="Upload">Upload</string>
+    <string name="btn_translate">translate</string>
+    <string name="textTranslated">Text_Translated</string>
 
 
 </resources>

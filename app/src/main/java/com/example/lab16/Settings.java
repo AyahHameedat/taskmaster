@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Team;
@@ -38,6 +39,17 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("OpenedMyApp")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
+
+
 
         mUsernameTxt = findViewById(R.id.edit_text_username_setting);
         Button btnSave = findViewById(R.id.btn_save);

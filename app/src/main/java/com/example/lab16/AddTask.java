@@ -1,42 +1,50 @@
 package com.example.lab16;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
-import com.example.lab16.data.TaskData;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddTask extends AppCompatActivity {
 
+    private static String URL;
+    public static final int REQUEST_CODE = 123;
     private String[] mStates = new String[]{"New", "In-Progress", "Complete", "Assigned"};
 
     private String[] mTeams = new String[]{"TeamOne", "TeamTwo", "TeamThree"};
@@ -44,7 +52,7 @@ public class AddTask extends AppCompatActivity {
     public static final String TASK_ID = "taskId";
     public static final String TEAMNAME = "teamName";
     public static final String DATA = "data";
-
+    private String imageName = null;
     private Handler handler;
 
 
@@ -58,6 +66,15 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+
+
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("OpenedMyApp")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
 
 
         // Upload Image
@@ -167,6 +184,7 @@ public class AddTask extends AppCompatActivity {
                                             .description(body)
                                             .status(state)
                                             .teamTasksId(team.getId())
+                                            .image(imageName)
                                             .build();
 
                                     Amplify.API.mutate(
@@ -199,79 +217,11 @@ public class AddTask extends AppCompatActivity {
 
         /// Upload Button
         uploadButton = findViewById(R.id.Upload_img);
-        uploadButton.setOnClickListener(view -> fileUpload());
+//        uploadButton.setOnClickListener(view -> fileUpload());
 
-//
-//
-//        buttonPressMe.setOnClickListener(view -> {
-//            String title = titleEditText.getText().toString();
-//            String note = noteEditText.getText().toString();
-//
-//            Task task = Task.builder()
-//                    .title(title)
-//                    .description("It's anybody's guess")
-//                    .build();
-//
-//            // Data store save
-//            Amplify.DataStore.save(task,
-//                    successTask -> {
-//                        Log.i(TAG, "Saved task: " + successTask.item().getTitle());
-//
-//                        // add the note to the task
-//                        Note taskNote = Note.builder()
-//                                .content(note)
-//                                .taskNotesId(successTask.item().getId())
-//                                .build();
-//
-//                        Amplify.DataStore.save(taskNote,
-//                                noteSuccess -> {
-//                                    Log.i(TAG, "Saved note: " + noteSuccess.item().getId());
-//
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putString(TASK_ID, noteSuccess.item().getTaskNotesId());
-//
-//                                    Message message = new Message();
-//                                    message.setData(bundle);
-//
-//                                    handler.sendMessage(message);
-//                                },
-//                                error -> Log.e(TAG, "Could not save note to DataStore", error)
-//                        );
-//
-//                    },
-//                    error -> Log.e(TAG, "Could not save task to DataStore", error)
-//            );
-//
-//            Amplify.API.mutate(ModelMutation.create(task),
-//                    successTask -> {
-//                        Log.i(TAG, "Saved task: " + successTask.getData().getTitle());
-//
-//                        // add the note to the task
-//                        Note taskNote = Note.builder()
-//                                .content(note)
-//                                .taskNotesId(successTask.getData().getId())
-//                                .build();
-//
-//                        Amplify.API.mutate(ModelMutation.create(taskNote),
-//                                noteSuccess -> {
-//                                    Log.i(TAG, "Saved note: " + noteSuccess.getData().getId());
-//
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putString(TASK_ID, noteSuccess.getData().getTaskNotesId());
-//
-//                                    Message message = new Message();
-//                                    message.setData(bundle);
-//
-//                                    handler.sendMessage(message);
-//                                },
-//                                error -> Log.e(TAG, "Could not save note to DataStore", error)
-//                        );
-//                    },
-//                    error -> Log.e(TAG, "Could not save task to DataStore", error)
-//            );
-//        });
-//        buttonUpload.setOnClickListener(view -> pictureUpload());
-//        buttonDownload.setOnClickListener(view -> pictureDownload());
+
+        uploadButton.setOnClickListener(view -> pictureUpload());
+//        uploadButton.setOnClickListener(view -> pictureDownload());
     }
 
 
@@ -296,6 +246,79 @@ public class AddTask extends AppCompatActivity {
                 storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
         );
     }
+
+
+    private void pictureUpload() {
+        // Launches photo picker in single-select mode.
+        // This means that the user can select one photo or video.
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK) {
+            // Handle error
+            Log.e(TAG, "onActivityResult: Error getting image from device");
+            return;
+        }
+
+//        File file = new File(data.getData().getPath());
+//        fileName = file.getName();
+//        fileData = data.getData();
+//
+        switch(requestCode) {
+            case REQUEST_CODE:
+                // Get photo picker response for single select.
+                Uri currentUri = data.getData();
+                File file = new File(data.getData().getPath());
+                imageName = file.getName();
+                // Do stuff with the photo/video URI.
+                Log.i(TAG, "onActivityResult: the uri is => " + currentUri);
+
+                try {
+                    Bitmap bitmap = getBitmapFromUri(currentUri);
+                    OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    os.close();
+
+                    // upload to s3
+                    // uploads the file
+//                    image =
+                    Amplify.Storage.uploadFile(
+                            imageName,
+                            file,
+                            result -> {
+//                                image = currentUri.getLastPathSegment();
+//                                imageName = result.getKey();
+                                Log.i(TAG, "Successfully uploaded: " + result.getKey());
+                            },
+                            storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
+        }
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+
+        return image;
+    }
+
+
 
 }
 
