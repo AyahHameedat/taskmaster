@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "taskmaster8634dced": {}
+        "taskmaster8634dced": {},
+        "true": {}
       }
     }
   }

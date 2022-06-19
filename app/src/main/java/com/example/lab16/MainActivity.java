@@ -21,6 +21,7 @@ import android.widget.Toast;
 import android.os.Handler;
 
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
@@ -28,6 +29,9 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.example.lab16.data.TaskData;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,6 +193,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("OpenedMyApp")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
+
 }
 
     @Override
@@ -313,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Title", tasksListAdap.get(position).getTitle());
                 intent.putExtra("Description", tasksListAdap.get(position).getDescription());
                 intent.putExtra("State", tasksListAdap.get(position).getStatus().toString());
+                intent.putExtra("image", tasksListAdap.get(position).getImage().toString());
                 startActivity(intent);
 
             });
@@ -418,5 +432,6 @@ public class MainActivity extends AppCompatActivity {
                 error -> Log.e(TAG, error.toString())
         );
     }
+
 
 }
