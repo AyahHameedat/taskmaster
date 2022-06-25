@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.amplifyframework.datastore.generated.model.Task;
 import com.example.lab16.data.TaskData;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class TaskRecyclerViewActivity extends AppCompatActivity {
 
-    List<TaskData> taskDataList = new ArrayList<>();
+    List<Task> taskDataList = new ArrayList<>();
 
 
     @Override
@@ -24,7 +25,7 @@ public class TaskRecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_recycler_view_adapter);
 
 
-        initialiseTaskData();
+//        initialiseTaskData();
 
 
         // get the recycler view object
@@ -56,11 +57,11 @@ public class TaskRecyclerViewActivity extends AppCompatActivity {
     }
 
 
-    private void initialiseTaskData()
-    {
-        taskDataList.add(new TaskData("Lab28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "new"));
-        taskDataList.add(new TaskData("Code_Challenge28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "in progress"));
-        taskDataList.add(new TaskData("Read29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "completed"));
-        taskDataList.add(new TaskData("Learning_Journal29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "assigned"));
-    }
+//    private void initialiseTaskData()
+//    {
+//        taskDataList.add(new TaskData("Lab28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "new"));
+//        taskDataList.add(new TaskData("Code_Challenge28", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "in progress"));
+//        taskDataList.add(new TaskData("Read29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "completed"));
+//        taskDataList.add(new TaskData("Learning_Journal29", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.", "assigned"));
+//    }
 }

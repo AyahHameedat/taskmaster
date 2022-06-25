@@ -39,12 +39,12 @@ public class AmplifyApplication extends Application {
             Log.e(TAG, "Could not initialize Amplify", e);
         }
 
-        AnalyticsEvent event = AnalyticsEvent.builder()
-                .name("OpenedMyApp")
-                .addProperty("Successful", true)
-                .addProperty("ProcessDuration", 792)
-                .build();
-
-        Amplify.Analytics.recordEvent(event);
+//        AnalyticsEvent event = AnalyticsEvent.builder()
+//                .name("OpenedMyApp")
+//                .addProperty("Successful", true)
+//                .addProperty("ProcessDuration", 792)
+//                .build();
+//
+//        Amplify.Analytics.recordEvent(event);
     }
 }

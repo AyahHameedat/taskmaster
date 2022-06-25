@@ -50,5 +50,7 @@
     <string name="Upload">Upload</string>
     <string name="btn_translate">translate</string>
     <string name="textTranslated">Text_Translated</string>
+    <string name="Interstitial_Ad"> Interstitial_Adv </string>
+    <string name="Rewarded_Ad" >Rewarded_Ad </string>
 
 </resources>
