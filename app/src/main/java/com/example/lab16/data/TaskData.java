@@ -1,11 +1,5 @@
 package com.example.lab16.data;
-<<<<<<< HEAD
 
-public class TaskData {
-
-    private final String title;
-    private final String body;
-=======
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -32,7 +26,6 @@ public class TaskData {
     private final String body;
 
     @ColumnInfo(name = "state")
->>>>>>> origin
     private final String state;
 
 
@@ -42,13 +35,10 @@ public class TaskData {
         this.state = state;
     }
 
-<<<<<<< HEAD
-=======
     public int getId() {
         return id;
     }
 
->>>>>>> origin
     public String getTitle() {
         return title;
     }

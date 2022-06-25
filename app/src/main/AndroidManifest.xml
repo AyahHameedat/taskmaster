@@ -14,9 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab16">
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/task_item_layout" />
 
         <activity
             android:name=".TaskRecyclerViewActivity"
@@ -52,7 +49,12 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false"/>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940673913588638~4244923578"/>
+
     </application>
 
 </manifest>

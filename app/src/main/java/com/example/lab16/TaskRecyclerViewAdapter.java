@@ -32,8 +32,6 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listTaskItemView = layoutInflater.inflate(R.layout.task_item, parent, false);
-        return null;
         View listTaskItemView = layoutInflater.inflate(R.layout.activity_task_recycler_view_adapter, parent, false);
         return new TaskViewHolder(listTaskItemView, taskListener);
 
@@ -43,9 +41,6 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
 
         holder.title.setText(taskDataList.get(position).getTitle());
-        holder.body.setText(taskDataList.get(position).getBody());
-        holder.state.setText(taskDataList.get(position).getState());
-
 //        holder.body.setText(taskDataList.get(position).getBody());
 //        holder.state.setText(taskDataList.get(position).getState());
 
@@ -56,14 +51,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         return taskDataList.size();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder{
-
-        TextView title;
-        TextView body;
-        TextView state;
 
 
-        final static class TaskViewHolder extends RecyclerView.ViewHolder{
+    final static class TaskViewHolder extends RecyclerView.ViewHolder{
 
         Button title;
 //        TextView body;
@@ -76,14 +66,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
             this.taskListener = taskListener;
 
-
             title = itemView.findViewById(R.id.recycler_view_Button);
-            title = itemView.findViewById(R.id.task_title);
-            body = itemView.findViewById(R.id.task_body);
-            state = itemView.findViewById(R.id.task_state);
-
-            itemView.setOnClickListener(view -> taskListener.onTaskClicked(getAdapterPosition()));
-            title = itemView.findViewById(R.id.recycler_view);
 //            body = itemView.findViewById(R.id.task_body);
 //            state = itemView.findViewById(R.id.task_state);
 
