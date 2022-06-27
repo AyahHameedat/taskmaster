@@ -6,6 +6,8 @@ type Task @model {
   description: String
   status: String
   image:String
+  latitude:Float
+  longitude:Float
 }
 
 type Team @model {

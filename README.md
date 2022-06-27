@@ -171,6 +171,20 @@ You can release your Android applications several ways. Usually, you release app
 
 ![](./screenshots/lab38.jpeg)
 
+
+# **Lab39:**
+### Location
+##### When the user adds a task, their location should be retrieved and included as part of the saved Task.
+
+![](./screenshots/lab39V1..jpeg)
+
+### Displaying Location
+#### On the Task Detail activity, the location of a Task should be displayed if it exists.
+
+![](./screenshots/lab39V2.jpeg)
+
+
+
 # **Lab41:**
 
 ### Analytics

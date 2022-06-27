@@ -1,7 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.annotations.HasMany;
-import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,8 +25,6 @@ public final class Team implements Model {
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
   private final @ModelField(targetType="Task") @HasMany(associatedWith = "teamTasksId", type = Task.class) List<Task> tasks = null;
-  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
-  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
@@ -38,14 +35,6 @@ public final class Team implements Model {
   
   public List<Task> getTasks() {
       return tasks;
-  }
-  
-  public Temporal.DateTime getCreatedAt() {
-      return createdAt;
-  }
-  
-  public Temporal.DateTime getUpdatedAt() {
-      return updatedAt;
   }
   
   private Team(String id, String name) {
@@ -62,9 +51,7 @@ public final class Team implements Model {
       } else {
       Team team = (Team) obj;
       return ObjectsCompat.equals(getId(), team.getId()) &&
-              ObjectsCompat.equals(getName(), team.getName()) &&
-              ObjectsCompat.equals(getCreatedAt(), team.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), team.getUpdatedAt());
+              ObjectsCompat.equals(getName(), team.getName());
       }
   }
   
@@ -73,8 +60,6 @@ public final class Team implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getName())
-      .append(getCreatedAt())
-      .append(getUpdatedAt())
       .toString()
       .hashCode();
   }
@@ -84,9 +69,7 @@ public final class Team implements Model {
     return new StringBuilder()
       .append("Team {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
-      .append("updatedAt=" + String.valueOf(getUpdatedAt()))
+      .append("name=" + String.valueOf(getName()))
       .append("}")
       .toString();
   }

@@ -37,5 +37,19 @@ export type AmplifyDependentResourcesAttributes = {
             "sourceLang": "string",
             "targetLang": "string"
         }
+    },
+    "geo": {
+        "map5a730fd0": {
+            "Name": "string",
+            "Style": "string",
+            "Region": "string",
+            "Arn": "string"
+        },
+        "mapa06e1f3f": {
+            "Name": "string",
+            "Style": "string",
+            "Region": "string",
+            "Arn": "string"
+        }
     }
 }
