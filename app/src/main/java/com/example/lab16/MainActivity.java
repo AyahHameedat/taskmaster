@@ -25,6 +25,7 @@ import android.os.Handler;
 import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
@@ -225,7 +226,13 @@ public class MainActivity extends AppCompatActivity {
 //            authSessionUserName(username);
 //            return true;
 //        });
-
+        handler = new Handler(getMainLooper(), msg -> {
+            AuthUser logedInUser = Amplify.Auth.getCurrentUser();
+            String username = logedInUser.getUsername();
+            mUserName.setText(username);
+            authSessionUserName(username);
+            return true;
+        });
 
 
         AnalyticsEvent event = AnalyticsEvent.builder()
