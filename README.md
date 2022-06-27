@@ -178,3 +178,25 @@ You can release your Android applications several ways. Usually, you release app
 ![](./screenshots/lab41.png)
 
 
+Banner Ad
+On the “Main” activity, add a banner ad to the bottom of the page and display a Google test ad there.
+
+Interstitial Ad
+Add a button to the “Main” activity that allows users to see an interstitial ad. (In a real app, you’ll want to show this during natural transitions/pauses in your app, but we don’t really have that in this application.)
+
+Rewarded Ad
+Add a button to the “Main” activity that allows users to see a rewarded ad using a Google test ad. When the user clicks the close button, the user should see their reward in a text field next to the button.
+
+# **Lab42:**
+
+### Banner Ad:
+##### On the “Main” activity, add a banner ad to the bottom of the page and display a Google test ad there.
+![](./screenshots/Banner.png)
+
+### Interstitial Ad:
+##### Add a button to the “Main” activity that allows users to see an interstitial ad. (In a real app, you’ll want to show this during natural transitions/pauses in your app, but we don’t really have that in this application.)
+![](./screenshots/Interstitial.png)
+
+### Rewarded Ad:
+##### Add a button to the “Main” activity that allows users to see a rewarded ad using a Google test ad. When the user clicks the close button, the user should see their reward in a text field next to the button.
+![](./screenshots/Rewarded.png)
