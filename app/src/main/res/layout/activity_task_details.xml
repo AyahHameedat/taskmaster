@@ -36,61 +36,76 @@
 
     <TextView
         android:id="@+id/Description_TaskDetails"
-        android:layout_width="272dp"
-        android:layout_height="152dp"
+        android:layout_width="289dp"
+        android:layout_height="86dp"
         android:layout_weight="0"
         android:text="@string/Description_TaskDetails"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.656" />
+        app:layout_constraintVertical_bias="0.562" />
+
 
     <TextView
         android:id="@+id/State"
+        android:layout_width="168dp"
+        android:layout_height="39dp"
+        android:layout_weight="0"
+        android:text="@string/State"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
+
+    <TextView
+        android:id="@+id/textTranslated"
         android:layout_width="180dp"
         android:layout_height="53dp"
         android:layout_weight="0"
-        android:text="@string/State"
+        android:text="@string/textTranslated"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907" />
+        app:layout_constraintVertical_bias="0.679" />
 
+    <Button
+        android:id="@+id/btn_translate"
+        android:layout_width="141dp"
+        android:layout_height="59dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/btn_translate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTranslated"
+        app:layout_constraintVertical_bias="1.0" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textTranslated"-->
-<!--        android:layout_width="180dp"-->
-<!--        android:layout_height="53dp"-->
-<!--        android:layout_weight="0"-->
-<!--        android:text="@string/textTranslated"-->
-<!--        android:textAppearance="?android:attr/textAppearanceLarge"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.147"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.815" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_translate"-->
-<!--        android:layout_width="118dp"-->
-<!--        android:layout_height="62dp"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginBottom="64dp"-->
-<!--        android:text="@string/btn_translate"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.945"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textTranslated"-->
-<!--        app:layout_constraintVertical_bias="0.916" />-->
+    <Button
+        android:id="@+id/btn_playSound"
+        android:layout_width="118dp"
+        android:layout_height="62dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/btn_playSound"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTranslated"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

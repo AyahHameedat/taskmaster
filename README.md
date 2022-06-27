@@ -164,3 +164,17 @@ You can release your Android applications several ways. Usually, you release app
 ##### On the Task detail activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.
 ![](./screenshots/Lab37_taskDetails.png)
 
+
+
+
+# **Lab41:**
+
+### Analytics
+##### On the “Main” activity (and any other activities you like), start recording at least one AnalyticsEvent. Make sure you can view instances of that event, including their custom properties, in Amazon Pinpoint.
+![](./screenshots/lab41-AWS.png)
+
+### Text To Speech:
+##### On the Task Detail activity, add a button to read out the task’s description using the Amplify Predictions library.
+![](./screenshots/lab41.png)
+
+

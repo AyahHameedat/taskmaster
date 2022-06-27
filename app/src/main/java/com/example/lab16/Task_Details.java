@@ -72,6 +72,8 @@ public class Task_Details extends AppCompatActivity {
         TextView taskBody = findViewById(R.id.Description_TaskDetails);
         TextView taskState = findViewById(R.id.State);
 
+        String getTaskDescription = taskBody.getText().toString();
+
 
         Handler handler = new Handler(Looper.getMainLooper(), msg -> {
 
@@ -114,15 +116,18 @@ public class Task_Details extends AppCompatActivity {
 
 
         //** To Translate the Description **//
-//        translateDescription();
+        translateDescription();
 
         //** To convert the text to speech **//
-//        Amplify.Predictions.convertTextToSpeech(
-//                getTaskDescription,
-//                result -> playAudio(result.getAudioData()),
-//                error -> Log.e("MyAmplifyApp", "Conversion failed", error)
-//        );
 
+        Button playSound = findViewById(R.id.btn_playSound);
+        playSound.setOnClickListener(view -> {
+            Amplify.Predictions.convertTextToSpeech(
+                    getTaskDescription,
+                    result -> playAudio(result.getAudioData()),
+                    error -> Log.e(TAG, "Conversion failed", error)
+            );
+        });
 
     }
 
@@ -147,28 +152,28 @@ public class Task_Details extends AppCompatActivity {
     }
 
 
-//    private void translateDescription() {
-//
-//        Button btn_translate = findViewById(R.id.btn_translate);
-//        btn_translate.setOnClickListener(view -> {
-//
-//                    TextView mTranslatedDescription = findViewById(R.id.textTranslated);
-//                    String getTaskDescription = getIntent().getStringExtra("Description");
-//                    Amplify.Predictions.translateText(
-//                            getTaskDescription,
-//                            LanguageType.ENGLISH,
-//                            LanguageType.ARABIC,
-//                            result -> {
-//                                Log.i("MyAmplifyApp", result.getTranslatedText());
-//                                mTranslatedDescription.setText(result.getTranslatedText());
-//                                mTranslatedDescription.setEnabled(true);
-//
-//                            },
-//                            error -> Log.e("MyAmplifyApp", "Translation failed", error)
-//                    );
-//                }
-//        );
-//    }
+    private void translateDescription() {
+
+        Button btn_translate = findViewById(R.id.btn_translate);
+        btn_translate.setOnClickListener(view -> {
+
+                    TextView mTranslatedDescription = findViewById(R.id.textTranslated);
+                    String getTaskDescription = getIntent().getStringExtra("Description");
+                    Amplify.Predictions.translateText(
+                            getTaskDescription,
+                            LanguageType.ENGLISH,
+                            LanguageType.ARABIC,
+                            result -> {
+                                Log.i("MyAmplifyApp", result.getTranslatedText());
+                                mTranslatedDescription.setText(result.getTranslatedText());
+                                mTranslatedDescription.setEnabled(true);
+
+                            },
+                            error -> Log.e("MyAmplifyApp", "Translation failed", error)
+                    );
+                }
+        );
+    }
 
     private void playAudio(InputStream data) {
         File mp3File = new File(getCacheDir(), "audio.mp3");
