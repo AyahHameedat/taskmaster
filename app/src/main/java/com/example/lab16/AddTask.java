@@ -78,6 +78,7 @@ public class AddTask extends AppCompatActivity {
 
         Amplify.Analytics.recordEvent(event);
 
+        sharedImage();
 
         // Upload Image
 //        setUpListeners();
@@ -283,5 +284,44 @@ public class AddTask extends AppCompatActivity {
 
         return image;
     }
+
+
+    public void sharedImage()
+    {
+
+        Intent intent = getIntent();
+        String name = taskTitle.getText().toString();
+        Uri imgUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+
+
+        if(imgUri != null) {
+            try {
+                Bitmap bitmap = getBitmapFromUri(imgUri);
+
+                File file = new File(getApplicationContext().getFilesDir(), "image.jpg");
+                OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.close();
+
+
+                Amplify.Storage.uploadFile(
+//                            name + ".jpg",
+                        imgUri.getLastPathSegment(),
+                        file,
+                        result -> {
+                            Log.i(TAG, "Successfully uploaded: " + result.getKey());
+                            imageName = result.getKey();
+                        },
+                        storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
 
 }
