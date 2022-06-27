@@ -165,7 +165,11 @@ You can release your Android applications several ways. Usually, you release app
 ![](./screenshots/Lab37_taskDetails.png)
 
 
+# **Lab38:**
+##### Feature Tasks: Adding a Task from Another Application
+###### Add an intent filter to your application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity with that image pre-selected.
 
+1[](./screenshots/lab38.jpeg)
 
 # **Lab41:**
 
