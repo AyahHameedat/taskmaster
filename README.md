@@ -151,3 +151,16 @@ You can release your Android applications several ways. Usually, you release app
 ### User Logout
 ##### Allow users to log out of your application.
 ![](./screenshots/Lab36.png)
+
+
+
+# **Lab37:**
+
+### Upload Image
+##### On the “Add a Task” activity, allow users to optionally select an image to attach to that task. If a user attaches an image to a task, that image should be uploaded to S3, and associated with that task.
+![](./screenshots/lab37_AddTask.png)
+
+### Displaying Files:
+##### On the Task detail activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.
+![](./screenshots/Lab37_taskDetails.png)
+

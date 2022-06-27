@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Title", tasksListAdap.get(position).getTitle());
                 intent.putExtra("Description", tasksListAdap.get(position).getDescription());
                 intent.putExtra("State", tasksListAdap.get(position).getStatus().toString());
-                intent.putExtra("image", tasksListAdap.get(position).getImage().toString());
+//                intent.putExtra("image", tasksListAdap.get(position).getImage().toString());
                 startActivity(intent);
 
             });

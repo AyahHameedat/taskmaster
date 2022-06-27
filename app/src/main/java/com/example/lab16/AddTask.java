@@ -43,7 +43,7 @@ import java.util.List;
 
 public class AddTask extends AppCompatActivity {
 
-    private static String URL;
+    private String URL;
     public static final int REQUEST_CODE = 123;
     private String[] mStates = new String[]{"New", "In-Progress", "Complete", "Assigned"};
 
@@ -52,9 +52,10 @@ public class AddTask extends AppCompatActivity {
     public static final String TASK_ID = "taskId";
     public static final String TEAMNAME = "teamName";
     public static final String DATA = "data";
-    private String imageName = null;
+    private String imageName = "";
     private Handler handler;
 
+    private EditText taskTitle;
 
 
     public static final String TAG = AddTask.class.getSimpleName();
@@ -66,6 +67,7 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        taskTitle = findViewById(R.id.ADD_TITLE);
 
 
         AnalyticsEvent event = AnalyticsEvent.builder()
@@ -78,9 +80,13 @@ public class AddTask extends AppCompatActivity {
 
 
         // Upload Image
-        setUpListeners();
+//        setUpListeners();
 
 
+        uploadButton = findViewById(R.id.Upload_img);
+//        uploadButton.setOnClickListener(view -> fileUpload());
+
+        uploadButton.setOnClickListener(view -> pictureUpload());
 
 
         /// Spinner + Adapter for status
@@ -109,7 +115,7 @@ public class AddTask extends AppCompatActivity {
         });
 
 
-            //  Spinner + Adapter for Team
+        //  Spinner + Adapter for Team
 
 
         List<Team> teamsList = new ArrayList<>();
@@ -148,8 +154,6 @@ public class AddTask extends AppCompatActivity {
                 });
 
 
-
-
         Button button = findViewById(R.id.ADD_SUBMIT);
 
 
@@ -157,17 +161,14 @@ public class AddTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                EditText addTitle = findViewById(R.id.ADD_TITLE);
                 EditText AddBody = findViewById(R.id.ADD_BODY);
                 Spinner stateSelector = findViewById(R.id.spinner_State_selector);
                 Spinner teamSelector = findViewById(R.id.spinner_Team_selector);
 
-
-                String title = addTitle.getText().toString();
+                String name = taskTitle.getText().toString();
                 String body = AddBody.getText().toString();
                 String state = stateSelector.getSelectedItem().toString();
                 String teamName = teamSelector.getSelectedItem().toString();
-
 
 
                 ///   Save the Task in DB
@@ -180,21 +181,27 @@ public class AddTask extends AppCompatActivity {
                                 if (teamName.equals(team.getName())) {
 //                            saveTasks(team);
                                     Task task = Task.builder()
-                                            .title(title)
+                                            .title(name)
                                             .description(body)
                                             .status(state)
                                             .teamTasksId(team.getId())
-                                            .image(imageName)
+                                            .image(imageName) //URL
                                             .build();
+
+                                    Log.i(TAG, "api: " + task.getImage());
+                                    Log.i(TAG, "api: " + task.getTitle());
 
                                     Amplify.API.mutate(
                                             ModelMutation.create(task),
-                                            success -> {},
-                                            error -> { });
+                                            success -> {
+                                            },
+                                            error -> {
+                                            });
                                 }
                             }
                         },
-                        error -> {}
+                        error -> {
+                        }
                 );
 
 
@@ -211,93 +218,51 @@ public class AddTask extends AppCompatActivity {
     }
 
 
+    public void pictureUpload() {
 
-
-    private void setUpListeners() {
-
-        /// Upload Button
-        uploadButton = findViewById(R.id.Upload_img);
-//        uploadButton.setOnClickListener(view -> fileUpload());
-
-
-        uploadButton.setOnClickListener(view -> pictureUpload());
-//        uploadButton.setOnClickListener(view -> pictureDownload());
-    }
-
-
-    private void fileUpload()
-    {
-        File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
-
-        // creates a file on the device
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-            writer.append("Example file contents");
-            writer.close();
-        } catch (Exception exception) {
-            Log.e(TAG, "Upload failed", exception);
-        }
-
-        // uploads the file
-        Amplify.Storage.uploadFile(
-                "ExampleKey",
-                exampleFile,
-                result -> Log.i(TAG, "Successfully uploaded: " + result.getKey()),
-                storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
-        );
-    }
-
-
-    private void pictureUpload() {
         // Launches photo picker in single-select mode.
         // This means that the user can select one photo or video.
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
 
         startActivityForResult(intent, REQUEST_CODE);
+
+
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode != Activity.RESULT_OK) {
             // Handle error
             Log.e(TAG, "onActivityResult: Error getting image from device");
             return;
         }
 
-//        File file = new File(data.getData().getPath());
-//        fileName = file.getName();
-//        fileData = data.getData();
-//
-        switch(requestCode) {
+        String name = taskTitle.getText().toString();
+        switch (requestCode) {
             case REQUEST_CODE:
                 // Get photo picker response for single select.
                 Uri currentUri = data.getData();
-                File file = new File(data.getData().getPath());
-                imageName = file.getName();
-                // Do stuff with the photo/video URI.
+
                 Log.i(TAG, "onActivityResult: the uri is => " + currentUri);
 
                 try {
                     Bitmap bitmap = getBitmapFromUri(currentUri);
+
+                    File file = new File(getApplicationContext().getFilesDir(), "image.jpg");
                     OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
                     os.close();
 
-                    // upload to s3
-                    // uploads the file
-//                    image =
+
                     Amplify.Storage.uploadFile(
-                            imageName,
+//                            name + ".jpg",
+                            currentUri.getLastPathSegment(),
                             file,
                             result -> {
-//                                image = currentUri.getLastPathSegment();
-//                                imageName = result.getKey();
                                 Log.i(TAG, "Successfully uploaded: " + result.getKey());
+                                imageName = result.getKey();
                             },
                             storageFailure -> Log.e(TAG, "Upload failed", storageFailure)
                     );
@@ -309,6 +274,7 @@ public class AddTask extends AppCompatActivity {
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+
         ParcelFileDescriptor parcelFileDescriptor =
                 getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
@@ -318,8 +284,4 @@ public class AddTask extends AppCompatActivity {
         return image;
     }
 
-
-
 }
-
-
