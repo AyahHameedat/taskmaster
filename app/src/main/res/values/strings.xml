@@ -17,7 +17,7 @@
 
 
     <string name="Title">Title</string>
-    <string name="Description_TaskDetails">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. </string>
+    <string name="Description_TaskDetails">Lorem Ipsum is simply dummy text of the printing.</string>
 
 
     <string name="TASK1"> Task1 </string>
@@ -52,5 +52,6 @@
     <string name="textTranslated">Text_Translated</string>
     <string name="Interstitial_Ad"> Interstitial_Adv </string>
     <string name="Rewarded_Ad" >Rewarded_Ad </string>
+    <string name="btn_playSound">play</string>
 
 </resources>
