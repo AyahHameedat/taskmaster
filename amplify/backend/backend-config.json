@@ -66,5 +66,39 @@
       "service": "Translate",
       "convertType": "translateText"
     }
+  },
+  "geo": {
+    "map5a730fd0": {
+      "isDefault": false,
+      "providerPlugin": "awscloudformation",
+      "service": "Map",
+      "mapStyle": "VectorEsriStreets",
+      "accessType": "AuthorizedUsers",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "taskmaster8634dced",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    },
+    "mapa06e1f3f": {
+      "isDefault": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Map",
+      "mapStyle": "VectorEsriStreets",
+      "accessType": "AuthorizedUsers",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "taskmaster8634dced",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    }
   }
 }

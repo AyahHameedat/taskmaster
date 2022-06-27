@@ -41,7 +41,11 @@ public class Task_Details extends AppCompatActivity {
     private String title;
     private String body;
     private String status;
+//    public double latitudeMap;
+//    public double longitudeMap;
 
+    public String latitudeMap;
+    public String longitudeMap;
     String imageKey;
 
 
@@ -54,6 +58,8 @@ public class Task_Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
 
+//        String latitudeMap = "";
+//        String longitudeMap = "";
 
         AnalyticsEvent event = AnalyticsEvent.builder()
                 .name("OpenedMyApp")
@@ -72,6 +78,9 @@ public class Task_Details extends AppCompatActivity {
         TextView taskBody = findViewById(R.id.Description_TaskDetails);
         TextView taskState = findViewById(R.id.State);
 
+        TextView lateMAp = findViewById(R.id.latitude);
+        TextView longMap = findViewById(R.id.longitude);
+
         String getTaskDescription = taskBody.getText().toString();
 
 
@@ -80,6 +89,9 @@ public class Task_Details extends AppCompatActivity {
             taskTitle.setText(title);
             taskBody.setText(body);
             taskState.setText(status);
+            lateMAp.setText(latitudeMap);
+            longMap.setText(longitudeMap);
+
             if (imageKey != null) {
                 getImage(imageKey);
             }
@@ -100,6 +112,8 @@ public class Task_Details extends AppCompatActivity {
                     body = detect.getData().getDescription();
                     status = detect.getData().getStatus();
                     imageKey = detect.getData().getImage();
+                    latitudeMap = detect.getData().getLatitude().toString();
+                    longitudeMap = detect.getData().getLongitude().toString();
 
 
                     Bundle bundle = new Bundle();
